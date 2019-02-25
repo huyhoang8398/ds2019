@@ -11,6 +11,13 @@ USTH ICT 2019 Distributed Systems
 Group Info
 =======================
 
-* Name 1 (ID1)
-* Name 2 (ID2)
+* Do Duy Huy Hoang - USTHBI7-071 
+* Pham Son Tung
+* Tran Duc Manh
+* Pham Minh Kien
 
+
+Group Topic 
+========================
+
+Remote shell using raw socket (multiple clients)
