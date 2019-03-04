@@ -1,0 +1,224 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[unicode=true]{hyperref}
+\hypersetup{
+            pdftitle={TCP File transfer},
+            pdfauthor={ DO Duy Huy Hoang PHAM Son Tung Tran Duc Manh Pham Minh Kien},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+\title{TCP File transfer}
+\providecommand{\subtitle}[1]{}
+\subtitle{Report}
+\author{\textbf{Member} \newline DO Duy Huy Hoang \newline PHAM Son Tung
+\newline Tran Duc Manh \newline Pham Minh Kien
+\newline \newline \textit{University of Science and Technology Hanoi}
+\newline \textit{ICT Department}}
+\date{2019-03-4}
+
+\begin{document}
+\maketitle
+
+\newpage{}
+
+\tableofcontents
+\newpage{}
+
+\subsection{Designing Protocol}\label{designing-protocol}
+
+\includegraphics[width=0.50000\textwidth]{protocol.png} * We used TCP
+sockets to establish a connection between the server and the client
+program.
+
+\subsection{System Organizing}\label{system-organizing}
+
+\includegraphics{overview.png}\{ width = 50\%\} * We create a socket
+first and also a folder for saving the file before executing the file
+transfer. The server then binds to a port and listens to the client. *
+The server side will get the file name and save in tempFile. * The
+client will get the length of file's content + filename
+
+\subsection{Detail Figure}\label{detail-figure}
+
+\includegraphics[width=0.50000\textwidth]{server.png}\\
+\includegraphics[width=0.50000\textwidth]{client.png}
+
+\subsection{Code implementation}\label{code-implementation}
+
+\subsubsection{Server side}\label{server-side}
+
+\begin{itemize}
+\item
+  Create a folder to save the file from the client
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \NormalTok{system(}\StringTok{"rm -rf /home/huyhoang8398/ds2019/Lab1.TCP/filereceived"}\NormalTok{);}
+  \NormalTok{system(}\StringTok{"mkdir filereceived"}\NormalTok{);}
+  \DataTypeTok{char} \NormalTok{directoryTemp[] = }\StringTok{"/home/huyhoang8398/ds2019/Lab1.TCP/filereceived/"}\NormalTok{;}
+\end{Highlighting}
+\end{Shaded}
+\item
+  To save the content of file
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \NormalTok{read(cli, s, }\KeywordTok{sizeof}\NormalTok{(s));}
+
+    \CommentTok{//get the file name and save in tempFile}
+    \ControlFlowTok{for} \NormalTok{(}\DataTypeTok{int} \NormalTok{i = }\DecValTok{0}\NormalTok{; i < strlen(s); ++i)}
+    \NormalTok{\{}
+      \ControlFlowTok{if}\NormalTok{(s[i]==newline[}\DecValTok{0}\NormalTok{])\{}
+        \NormalTok{index = i;}
+        \ControlFlowTok{break}\NormalTok{;}
+      \NormalTok{\}}\ControlFlowTok{else} \NormalTok{tempFile[i]=s[i];}
+    \NormalTok{\}}
+    \NormalTok{printf(}\StringTok{"}\SpecialCharTok{%s\textbackslash{}n}\StringTok{"}\NormalTok{, tempFile);}
+    \NormalTok{strcat(directoryTemp,tempFile);}
+    \NormalTok{printf(}\StringTok{"Save to }\SpecialCharTok{%s\textbackslash{}n}\StringTok{"}\NormalTok{, directoryTemp);}
+    \CommentTok{//get content of the file}
+    \DataTypeTok{char} \NormalTok{*tempContent;}
+    \NormalTok{tempContent = (}\DataTypeTok{char} \NormalTok{*) malloc(}\KeywordTok{sizeof}\NormalTok{(}\DataTypeTok{char}\NormalTok{)*strlen(s));}
+    \DataTypeTok{int} \NormalTok{j=}\DecValTok{0}\NormalTok{;}
+    \ControlFlowTok{for} \NormalTok{(}\DataTypeTok{int} \NormalTok{i = index}\DecValTok{+1}\NormalTok{; i < strlen(s); ++i)\{}
+      \NormalTok{tempContent[j++]=s[i];                            }
+    \NormalTok{\}}
+    \NormalTok{printf(}\StringTok{"File content : }\SpecialCharTok{\textbackslash{}n%s\textbackslash{}n}\StringTok{"}\NormalTok{,tempContent);}
+    \NormalTok{f=fopen(directoryTemp,}\StringTok{"w+"}\NormalTok{); }\CommentTok{// open file to read }
+
+    \NormalTok{fprintf(f, }\StringTok{"}\SpecialCharTok{%s}\StringTok{"}\NormalTok{,tempContent);}
+    \NormalTok{fflush(stdin);}
+    \NormalTok{fclose(f); }\CommentTok{// close to save file to the directory filereceive}
+\end{Highlighting}
+\end{Shaded}
+\end{itemize}
+
+\subsubsection{Client side}\label{client-side}
+
+\begin{itemize}
+\tightlist
+\item
+  Sending a file to the server.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \CommentTok{//open file to read using filename}
+  \NormalTok{f = fopen(filename,}\StringTok{"r"}\NormalTok{);}
+
+  \CommentTok{//get the length of file's content + filename}
+  \DataTypeTok{size_t} \NormalTok{pos = ftell(f);    }\CommentTok{// Current position}
+  \NormalTok{fseek(f, }\DecValTok{0}\NormalTok{, SEEK_END);    }\CommentTok{// Go to end}
+  \DataTypeTok{size_t} \NormalTok{length = ftell(f); }\CommentTok{// read the position which is the size}
+  \NormalTok{fseek(f, pos, SEEK_SET);}
+  \DataTypeTok{int} \NormalTok{lengthint = length+strlen(filename);}
+
+  \CommentTok{//allocate data into string}
+  \NormalTok{s = (}\DataTypeTok{char} \NormalTok{*) malloc(lengthint*}\KeywordTok{sizeof}\NormalTok{(}\DataTypeTok{char}\NormalTok{));}
+  \CommentTok{//copy filename to the first part of s}
+  \NormalTok{strcpy(s,filename);}
+  \CommentTok{//append a new line in s}
+  \NormalTok{strcat(s,}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+  \CommentTok{//index for s, with value of filename}
+  \NormalTok{temp = strlen(filename)}\DecValTok{+1}\NormalTok{;}
+  \CommentTok{//save content of file into s}
+  \ControlFlowTok{if} \NormalTok{(f)\{}
+    \ControlFlowTok{while}\NormalTok{((c = getc(f))!=EOF)}
+      \NormalTok{s[temp++] = c;}
+  \NormalTok{\}}
+
+  \NormalTok{fclose(f);}
+  \FunctionTok{connect}\NormalTok{(serv, (}\KeywordTok{struct} \NormalTok{sockaddr *)&ad, ad_length);}
+  \NormalTok{write(serv, s, strlen(s) + }\DecValTok{1}\NormalTok{);}
+\end{Highlighting}
+\end{Shaded}
+
+\end{document}
