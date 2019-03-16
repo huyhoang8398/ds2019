@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
+#include <string.h>
 
 int main(int argc, char* argv[]) {
     int so;
@@ -32,7 +33,9 @@ int main(int argc, char* argv[]) {
 
         // send some data to server
         printf("client>");
-        scanf("%s", s);
+        fgets(s, 100, stdin);
+        // scanf("%s", s);
+        printf("%s", s);
         write(serv, s, strlen(s) + 1);
 
         // then it's server turn
