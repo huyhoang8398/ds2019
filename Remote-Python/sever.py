@@ -21,7 +21,8 @@ def threaded(c):
       import subprocess
       command = str(data.decode("utf-8"))
       print (command)
-      if "cd" in command:
+      if (command.startswith('cd') == True):
+      # if "cd" in command:
         print ("contain cd")
         # subprocess.call(command)
         # os.getcwd()
