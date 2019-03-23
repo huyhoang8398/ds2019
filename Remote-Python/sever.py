@@ -1,12 +1,16 @@
 import socket
 from _thread import *
 import threading 
+import os
+from stringexec import parseString, writeString
 # thread fuction 
 # print_lock = threading.Lock()   
 def threaded(c): 
     while True: 
     # data received from client 
       data = c.recv(1024) 
+      status = "done"
+
       if not data: 
         print('Bye') 
           
@@ -15,18 +19,33 @@ def threaded(c):
         break
       from subprocess import check_output
       import subprocess
+      command = str(data.decode("utf-8"))
+      print (command)
+      if "cd" in command:
+        print ("contain cd")
+        # subprocess.call(command)
+        # os.getcwd()
+        commandNew = parseString(command, 'cd ')
+        print (commandNew)
+        os.chdir(commandNew)
+        # subprocess.Popen(cwd=commandNew)
+        # os.getcwd()
+        c.send(status.encode("utf-8"))
+        
+      else:
         # subprocess.call(data)
-      process = subprocess.Popen(str(data.decode("utf-8")), stdout=subprocess.PIPE, stderr=None, shell=True)
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=None, shell=True)
 
-        #Launch the shell command:
-      output = process.communicate()
+          #Launch the shell command:
+        output = process.communicate()
 
-      print (output[0].decode("utf-8"))
+        print (output[0].decode("utf-8"))
         # data = str(data).upper()
         # out = check_output(str(data))
         # print (str(out))
         # print ("sending" + str(data))
-      c.send(output[0])
+        c.send(output[0])
+        c.send(status.encode("utf-8"))
 # connection closed 
     c.close() 
 
@@ -36,7 +55,7 @@ def Main():
     # reverse a port on your computer 
     # in our case it is 12345 but it 
     # can be anything 
-    port = 61345
+    port = 11345
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
     s.bind((host, port)) 
     print("socket binded to post", port) 
